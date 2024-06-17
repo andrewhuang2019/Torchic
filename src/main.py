@@ -1,6 +1,8 @@
+import torch
 
 def main():
-    pass
+    x = torch.rand(5,3)
+    print(x)
 
 main()
 
