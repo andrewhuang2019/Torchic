@@ -26,3 +26,9 @@ class Pokemon:
     
     def get_moveset(self):
         return self.moveset
+    
+    def set_health(self, health):
+        self.health = health
+    
+    def set_attack(self, attack):
+        self.attack = attack
