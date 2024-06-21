@@ -18,7 +18,6 @@ class App:
         pygame.display.set_caption("Torchic")
         self.button1 = Button(300, 250, 200, 50, "Click Me", blue, green)
         self._running = True
-
  
     def on_event(self, event):
         if event.type == pygame.QUIT:
