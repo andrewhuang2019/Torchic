@@ -32,3 +32,15 @@ class Pokemon:
     
     def set_attack(self, attack):
         self.attack = attack
+
+    def set_sp_attack(self, sp_attack):
+        self.sp_attack = sp_attack
+
+    def set_defense(self, defense):
+        self.defense = defense
+
+    def set_sp_defense(self, sp_defense):
+        self.sp_defense = sp_defense
+
+    def set_moveset(self, moveset):
+        self.moveset = moveset
