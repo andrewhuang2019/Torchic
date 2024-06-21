@@ -1,57 +1,51 @@
 import pygame
-import sys
+from pygame.locals import *
+from button import Button
 
-# Initialize Pygame
-pygame.init()
+blue = (0, 0, 255)
+green = (0, 255, 0)
 
-# Set up display
-width, height = 800, 600
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Moving Rectangle")
+class App:
+    def __init__(self):
+        self._running = True
+        self._display_surf = None
+        self.size = self.width, self.height = 800, 600
+        self.button1 = None
+ 
+    def on_init(self):
+        pygame.init()
+        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        pygame.display.set_caption("Torchic")
+        self.button1 = Button(300, 250, 200, 50, "Click Me", blue, green)
+        self._running = True
 
-# Set up colors
-black = (0, 0, 0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-
-# Set up rectangle properties
-rect_x = 50
-rect_y = 50
-rect_width = 50
-rect_height = 50
-rect_speed_x = 5
-rect_speed_y = 5
-
-# Main game loop
-running = True
-while running:
-    # Handle events
-    for event in pygame.event.get():
+ 
+    def on_event(self, event):
         if event.type == pygame.QUIT:
-            running = False
+            self._running = False
+        if self.button1.is_clicked(event):
+            print("Button Clicked!")
+    
+    def on_loop(self):
+        self.button1.draw(self._display_surf)
+        pygame.display.flip()
 
-    # Move the rectangle
-    rect_x += rect_speed_x
-    rect_y += rect_speed_y
+    def on_render(self):
+        pass
+    def on_cleanup(self):
+        pygame.quit()
+ 
+    def on_execute(self):
+        if self.on_init() == False:
+            self._running = False
+ 
+        while( self._running ):
+            for event in pygame.event.get():
+                self.on_event(event)
+            self.on_loop()
+            self.on_render()
+        self.on_cleanup()
 
-    # Bounce the rectangle off the edges
-    if rect_x < 0 or rect_x + rect_width > width:
-        rect_speed_x = -rect_speed_x
-    if rect_y < 0 or rect_y + rect_height > height:
-        rect_speed_y = -rect_speed_y
-
-    # Clear the screen
-    screen.fill(black)
-
-    # Draw the rectangle
-    pygame.draw.rect(screen, red, (rect_x, rect_y, rect_width, rect_height))
-
-    # Update the display
-    pygame.display.flip()
-
-    # Cap the frame rate
-    pygame.time.Clock().tick(60)
-
-# Clean up
-pygame.quit()
-sys.exit()
+if __name__ == "__main__" :
+    theApp = App()
+    theApp.on_execute()
