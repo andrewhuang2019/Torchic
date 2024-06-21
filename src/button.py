@@ -11,7 +11,7 @@ class Button:
         self.text = text
         self.color = color
         self.hover_color = hover_color
-        self.font = pygame.font.FontType(None, 36)
+        self.font = pygame.font.Font("assets/pokemon_pixel_font.ttf", 36)
         self.text_surf = self.font.render(text, True, white)
         self.text_rect = self.text_surf.get_rect(center = self.rect.center)
     
