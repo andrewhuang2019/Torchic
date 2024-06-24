@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from button import Button
+from battle import Battle
 
 blue = (0, 0, 255)
 green = (0, 255, 0)
@@ -11,29 +12,20 @@ class App:
         self._display_surf = None
         self.size = self.width, self.height = 800, 600
         self.button1 = None
+        self.in_battle = False
  
     def on_init(self):
-        pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        pygame.display.set_caption("Torchic")
-        self.button1 = Button(350, 450, 200, 50, "FIGHT", blue, green)
-        self.button2 = Button(575, 450, 200, 50, "PKMN", blue, green)
-        self.button3 = Button(350, 525, 200, 50, "ITEM", blue, green)
-        self.button4 = Button(575, 525, 200, 50, "RUN", blue, green)
-
+        self.battle_screen = Battle()
         self._running = True
  
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
-        if self.button1.is_clicked(event):
-            print("Button Clicked!")
+        if self.battle_screen.button1_is_clicked(event):
+            print("Button clicked!")
     
     def on_loop(self):
-        self.button1.draw(self._display_surf)
-        self.button2.draw(self._display_surf)
-        self.button3.draw(self._display_surf)
-        self.button4.draw(self._display_surf)
+        self.battle_screen.display_screen()
         pygame.display.flip()
 
     def on_render(self):
