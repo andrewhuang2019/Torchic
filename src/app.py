@@ -15,6 +15,7 @@ class App:
         self.in_battle = False
  
     def on_init(self):
+        pygame.init()
         self.battle_screen = Battle()
         self._running = True
  
