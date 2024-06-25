@@ -1,43 +1,53 @@
 import pygame
 from pygame.locals import *
+
 from button import Button
+from battle import Battle
+from screen import Screen
+from menu import Menu
 
 blue = (0, 0, 255)
 green = (0, 255, 0)
 
 class App:
     def __init__(self):
+        pygame.init()
         self._running = True
         self._display_surf = None
         self.size = self.width, self.height = 800, 600
-        self.button1 = None
+
+        self.battle = Battle()
+        self.menu = Menu()
+        self.menu.make_current_screen()
+
+        #self.button1 = None
  
     def on_init(self):
-        pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        pygame.display.set_caption("Torchic")
-        self.button1 = Button(350, 450, 200, 50, "FIGHT", blue, green)
-        self.button2 = Button(575, 450, 200, 50, "PKMN", blue, green)
-        self.button3 = Button(350, 525, 200, 50, "ITEM", blue, green)
-        self.button4 = Button(575, 525, 200, 50, "RUN", blue, green)
-
+        self.in_menu = True
+        self.in_battle = False
         self._running = True
  
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
-        if self.button1.is_clicked(event):
-            print("Button Clicked!")
-    
+        if self.menu.fight_button_is_clicked(event):
+            self.battle.make_current_screen()
+            self.in_battle = True
+            self.in_menu = False
+        if self.battle.back_button_is_clicked(event):
+            self.menu.make_current_screen()
+            self.in_battle = False
+            self.in_menu = True
+
     def on_loop(self):
-        self.button1.draw(self._display_surf)
-        self.button2.draw(self._display_surf)
-        self.button3.draw(self._display_surf)
-        self.button4.draw(self._display_surf)
-        pygame.display.flip()
+        pass
 
     def on_render(self):
-        pass
+        if self.in_menu == True:
+            self.menu.display_screen()
+        if self.in_battle == True:
+            self.battle.display_screen()
+
     def on_cleanup(self):
         pygame.quit()
  
