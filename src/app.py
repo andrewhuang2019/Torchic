@@ -4,6 +4,7 @@ from pygame.locals import *
 from button import Button
 from battle import Battle
 from screen import Screen
+from menu import Menu
 
 blue = (0, 0, 255)
 green = (0, 255, 0)
@@ -16,30 +17,34 @@ class App:
         self.size = self.width, self.height = 800, 600
 
         self.battle = Battle()
-        self.menu_screen = Screen("Menu")
-        self.battle.make_current_screen()
+        self.menu = Menu()
+        self.menu.make_current_screen()
+
         #self.button1 = None
-        self.in_battle = True
  
     def on_init(self):
-        self.menu_screen.make_current_screen()
-        #self.battle_screen = Battle()
+        self.in_menu = True
+        self.in_battle = False
         self._running = True
  
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
-        
-        '''if self.battle_screen.button1_is_clicked(event):
-            print("Button clicked!")'''
-    
-    def on_loop(self):
-        #self.battle_screen.display_screen()
+        if self.menu.fight_button_is_clicked(event):
+            self.battle.make_current_screen()
+            self.in_battle = True
+            self.in_menu = False
+        if self.battle.back_button_is_clicked(event):
+            self.menu.make_current_screen()
+            self.in_battle = False
+            self.in_menu = True
 
-        #self.battle_screen.screen_update()
+    def on_loop(self):
         pass
 
     def on_render(self):
+        if self.in_menu == True:
+            self.menu.display_screen()
         if self.in_battle == True:
             self.battle.display_screen()
 
