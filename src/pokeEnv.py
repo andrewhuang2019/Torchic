@@ -12,6 +12,7 @@ ATTACK_4 = 3
 
 class PokeEnv(Env):
     def __init__(self):
+        self.seed = None
         self.cumulative_reward = 0
         self.state = [0,0]   # p1 health, p2 health
         p1_hp = random.randrange(25,150)
@@ -73,9 +74,12 @@ class PokeEnv(Env):
                 print('YOU LOSE')
         # Update the environment state
         self.cumulative_reward += reward
-        return self.state, reward, done, info
+        return self.state, reward, done, False, info
 
-    def reset(self):
+    def reset(self,seed=None):
+        info = {}
+        if seed is not None:
+            self.seed = seed
         self.cumulative_reward = 0
         #
         # set the initial state to a flattened 6x6 grid with a randomly 
@@ -89,7 +93,7 @@ class PokeEnv(Env):
  
         # convert the python array into a numpy array 
         self.state = np.array(self.state, dtype=np.int16)
-        return self.state
+        return self.state,info
 
 
     def render(self):
