@@ -59,9 +59,8 @@ class PokeEnv(Env):
             done = True    
 
             # this section is for display purposes
-            os.system("clear")
-            print(f'Cumulative Reward: {self.cumulative_reward}')
-            print('YOU WIN!!!!')
+            print(f'Cumulative Reward:  {self.cumulative_reward:.2f}',end='  ')
+            print('WIN')
         else:
             self.state[0] -= random.randrange(0,25)
             if self.state[0] <= 0:
@@ -69,9 +68,8 @@ class PokeEnv(Env):
                 self.cumulative_reward += reward 
                 done = True
                 # this section is for display purposes
-                os.system("clear")
-                print(f'Cumulative Reward: {self.cumulative_reward}')
-                print('YOU LOSE')
+                print(f'Cumulative Reward: {self.cumulative_reward:.2f}',end='  ')
+                print('LOSE')
         # Update the environment state
         self.cumulative_reward += reward
         return self.state, reward, done, False, info
@@ -94,11 +92,3 @@ class PokeEnv(Env):
         # convert the python array into a numpy array 
         self.state = np.array(self.state, dtype=np.int16)
         return self.state,info
-
-
-    def render(self):
-        os.system("clear")
-        print(f'Cumulative Reward: {self.cumulative_reward}')
-        print(f'P1 hp: {self.state[0]}')
-        print(f'P2 hp: {self.state[1]}')
-     
