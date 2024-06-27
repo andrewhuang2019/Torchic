@@ -1,4 +1,5 @@
 import pandas as pd
+import random
 
 class PokemonManager:
     def __init__(self):
@@ -14,9 +15,12 @@ class PokemonManager:
             return self.pokedex[input]
         else:
             raise TypeError("Invalid Type")
+    
+    def get_random_pokemon(self):
+        return self.pokedex.iloc[random.randint(1, 151)]
 
 
 if __name__ == "__main__":
     pokemon_manager = PokemonManager()
-    print("teehee")
+    print(pokemon_manager.get_random_pokemon())
 

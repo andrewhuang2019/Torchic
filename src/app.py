@@ -5,6 +5,8 @@ from button import Button
 from battle import Battle
 from screen import Screen
 from menu import Menu
+from pokemon_manager import PokemonManager
+from pokemon import Pokemon
 
 blue = (0, 0, 255)
 green = (0, 255, 0)
@@ -19,6 +21,10 @@ class App:
         self.battle = Battle()
         self.menu = Menu()
         self.menu.make_current_screen()
+        self.pokedex = PokemonManager()
+
+        self.pokemon1 = self.pokedex.get_random_pokemon()
+        self.pokemon1 = Pokemon(self.pokemon1['Name'])
 
         #self.button1 = None
  
