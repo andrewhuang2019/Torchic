@@ -39,30 +39,38 @@ class PokeEnv(Env):
         # just trust that they move the agent and prevent 
         # it from moving off of the grid
         #
-        if action == ATTACK_1:
-            self.state[1] -= 16
-        elif action == ATTACK_2:
-            self.state[1] -= 25
-        elif action == ATTACK_3:
-            self.state[1] -= 10
-        elif action == ATTACK_4:
-            self.state[1] -= 8
+        if action in [0,1,2,3]:
+            attacks = [1,8,17,25]
+        # if action == ATTACK_1:
+        #     self.state[1] -= 16
+        # elif action == ATTACK_2:
+        #     self.state[1] -= 25
+        # elif action == ATTACK_3:
+        #     self.state[1] -= 10
+        # elif action == ATTACK_4:
+        #     self.state[1] -= 8
+            self.state[1] -= attacks[action]
         else:
             # check for invalid actions
             raise Exception("invalid action")
         #
         # check for win/lose conditions and os.system("cls")lset reward
         #
+
+        print(self.state,end=' ')
+
         if self.state[1] <= 0:
             reward = 1.0
             self.cumulative_reward += reward
             done = True    
-
+            print(attacks[action])
             # this section is for display purposes
             print(f'Cumulative Reward:  {self.cumulative_reward:.2f}',end='  ')
             print('WIN')
         else:
-            self.state[0] -= random.randrange(0,25)
+            dmg = random.randrange(10,25)
+            self.state[0] -= dmg
+            print(dmg,attacks[action])
             if self.state[0] <= 0:
                 reward = -1.0
                 self.cumulative_reward += reward 
@@ -92,3 +100,4 @@ class PokeEnv(Env):
         # convert the python array into a numpy array 
         self.state = np.array(self.state, dtype=np.int16)
         return self.state,info
+    
