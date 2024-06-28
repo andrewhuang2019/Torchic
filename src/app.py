@@ -28,7 +28,7 @@ class App:
         self.pokemon2 = Pokemon(self.pokemon2['Name'], self.pokemon2['HP'], self.pokemon2['Attack'], self.pokemon2['Defense'], 
                                 self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 4)
         
-        self.battle = Battle(self.pokemon1, 5)
+        self.battle = Battle(self.pokemon1, self.pokemon2)
         self.menu = Menu()
         self.menu.make_current_screen()
         
