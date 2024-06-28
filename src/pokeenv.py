@@ -2,7 +2,7 @@ from gymnasium import Env
 from gymnasium import spaces 
 import numpy as np 
 import random
-import os
+import math
 
 # action values
 ATTACK_1 = 0
@@ -101,3 +101,39 @@ class PokeEnv(Env):
         self.state = np.array(self.state, dtype=np.int16)
         return self.state,info
     
+    def calc_dmg(self,move,poke1,poke2):
+        #             level             critical
+        dmg = ((2 * poke1.level * self.crit_hit(poke1.speed))/5) + 2
+        #            power            A/D
+        dmg = dmg * move.power * (poke1.attack/poke2.defense)
+        dmg = (dmg/50) + 2
+
+        # stab
+        if move.type == poke1.type1 or (move.type == poke1.type2 and poke1.type2):
+            dmg += math.floor(dmg/2)
+
+        # type 1 effectiveness
+        dmg *= self.type_effect(move.type,poke2.type1)
+
+        # type 2 effectiveness
+        if poke2.type2:
+            dmg *= self.type_effect(move.type,poke2.type2)
+
+        # random multiplier
+        if dmg == 1:
+            return int(dmg)
+        else:
+            rand = random.randint(217,255)/255
+            return int(dmg * rand)
+        
+    def crit_hit(self,speed):
+        thres = min(255,math.floor(speed/2))
+        if random.randint(0,255) < thres:
+            return 2
+        return 1
+
+    def type_effect(self,type1,type2):
+        chart = np.loadtxt('chart.csv',dtype=str,delimiter=',')
+        i = np.where(chart == type1)[1][0]
+        j = np.where(chart == type2)[0][1]
+        return chart[i,j]
