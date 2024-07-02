@@ -13,7 +13,6 @@ class Pokemon:
         self.type1 = type1
         self.type2 = type2
 
-
     def get_name(self):
         return self.name
 
@@ -37,6 +36,9 @@ class Pokemon:
     
     def get_moveset(self):
         return self.moveset
+    
+    def get_type_1(self):
+        return self.type1
     
     def set_name(self, name):
         self.name = name
