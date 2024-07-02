@@ -4,21 +4,22 @@ import numpy as np
 import random
 import math
 
-# action values
-ATTACK_1 = 0
-ATTACK_2 = 1
-ATTACK_3 = 2
-ATTACK_4 = 3
+from pokemon import Pokemon
+from move import Move
+
+move1 = Move('Absorb','Grass',20,'Special')
+move2 = Move('Aqua Tail','Water',30,'Physical')
+move3 = Move('Barrage','Normal',15,'Physical')
+move4 = Move('Bolt Beak','Electric',25,'Physical')
+
+poke1 = Pokemon(39,'Charmander',52,60,43,50,[move1,move2,move3,move4],65,25,'Fire')
+poke2 = Pokemon(44,'Squirtle',48,50,65,64,[move1,move2,move3,move4],43,25,'Water')
 
 class PokeEnv(Env):
     def __init__(self):
         self.seed = None
         self.cumulative_reward = 0
-        self.state = [0,0]   # p1 health, p2 health
-        p1_hp = random.randrange(25,150)
-        p2_hp = random.randrange(25,150)
-        self.state[0] = p1_hp
-        self.state[1] = p2_hp 
+        self.state = [poke1.health,poke2.health]   # p1 health, p2 health
         self.state = np.array(self.state, dtype=np.int16)
         # observation space (valid ranges for observations in the state)
         self.observation_space = spaces.Box(0, 250, [2,], dtype=np.int16)
@@ -26,36 +27,15 @@ class PokeEnv(Env):
         self.action_space = spaces.Discrete(4)
     
     def step(self, action):
-        # placeholder for debugging information
         info = {}
-        # set default values for done, reward, and the player position
-        #before taking the action
+
         done = False
         reward = -0.01
-        #
-        # take the action by moving the player
-        #
-        # this section can be a bit confusing, but 
-        # just trust that they move the agent and prevent 
-        # it from moving off of the grid
-        #
+
         if action in [0,1,2,3]:
-            attacks = [1,8,17,25]
-        # if action == ATTACK_1:
-        #     self.state[1] -= 16
-        # elif action == ATTACK_2:
-        #     self.state[1] -= 25
-        # elif action == ATTACK_3:
-        #     self.state[1] -= 10
-        # elif action == ATTACK_4:
-        #     self.state[1] -= 8
-            self.state[1] -= attacks[action]
+            self.state[1] -= self.calc_dmg(poke1,poke2,poke1.moveset[action])
         else:
-            # check for invalid actions
             raise Exception("invalid action")
-        #
-        # check for win/lose conditions and os.system("cls")lset reward
-        #
 
         print(self.state,end=' ')
 
@@ -63,14 +43,14 @@ class PokeEnv(Env):
             reward = 1.0
             self.cumulative_reward += reward
             done = True    
-            print(attacks[action])
+            print(poke1.moveset[action].name)
             # this section is for display purposes
             print(f'Cumulative Reward:  {self.cumulative_reward:.2f}',end='  ')
             print('WIN')
         else:
-            dmg = random.randrange(10,25)
-            self.state[0] -= dmg
-            print(dmg,attacks[action])
+            dmg = random.randrange(0,3)
+            self.state[0] -= self.calc_dmg(poke2,poke1,poke2.moveset[dmg])
+            print(poke2.moveset[dmg].name, '|', poke1.moveset[action].name)
             if self.state[0] <= 0:
                 reward = -1.0
                 self.cumulative_reward += reward 
@@ -91,21 +71,23 @@ class PokeEnv(Env):
         # set the initial state to a flattened 6x6 grid with a randomly 
         # placed entry, win, and player
         #
-        self.state = [0,0] 
-        p1_hp = random.randrange(25,150)
-        p2_hp = random.randrange(25,150)
-        self.state[0] = p1_hp
-        self.state[1] = p2_hp        
+        self.state = [poke1.health,poke2.health] 
  
         # convert the python array into a numpy array 
         self.state = np.array(self.state, dtype=np.int16)
         return self.state,info
     
-    def calc_dmg(self,move,poke1,poke2):
+    def calc_dmg(self,poke1,poke2,move):
         #             level             critical
         dmg = ((2 * poke1.level * self.crit_hit(poke1.speed))/5) + 2
-        #            power            A/D
-        dmg = dmg * move.power * (poke1.attack/poke2.defense)
+        #            power            
+        dmg = dmg * move.power
+
+        # A/D
+        if move.dmg_class == 'Special':
+            dmg = dmg * (poke1.sp_attack/poke2.sp_defense)
+        else:
+            dmg = dmg * (poke1.attack/poke2.defense)
         dmg = (dmg/50) + 2
 
         # stab
@@ -136,4 +118,4 @@ class PokeEnv(Env):
         chart = np.loadtxt('chart.csv',dtype=str,delimiter=',')
         i = np.where(chart == type1)[1][0]
         j = np.where(chart == type2)[0][1]
-        return chart[i,j]
+        return float(chart[i,j])
