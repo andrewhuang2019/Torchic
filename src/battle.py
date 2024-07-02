@@ -7,6 +7,7 @@ blue = (0, 0, 255)
 green = (0, 255, 0)
 white = (255, 255, 255)
 black = (0, 0, 0)
+gray = (211, 211, 211)
 
 class Battle:
     def __init__(self, pokemon1, pokemon2):
@@ -64,10 +65,10 @@ class Battle:
         pygame.draw.rect(self.battle_screen.screen, white, self.fight_box)
 
         pygame.draw.rect(self.battle_screen.screen, black, self.pokemon1_health_background)
-        pygame.draw.rect(self.battle_screen.screen, white, self.pokemon1_health)
+        pygame.draw.rect(self.battle_screen.screen, gray, self.pokemon1_health)
 
         pygame.draw.rect(self.battle_screen.screen, black, self.pokemon2_health_background)
-        pygame.draw.rect(self.battle_screen.screen, white, self.pokemon2_health)
+        pygame.draw.rect(self.battle_screen.screen, gray, self.pokemon2_health)
 
         self.button1.draw(self.battle_screen.screen)
         self.button2.draw(self.battle_screen.screen)
