@@ -7,6 +7,7 @@ import math
 from pokemon import Pokemon
 from move import Move
 
+# temp initialization of moves and pokemon
 move1 = Move('Absorb','Grass',20,'Special')
 move2 = Move('Aqua Tail','Water',30,'Physical')
 move3 = Move('Barrage','Normal',15,'Physical')
@@ -108,12 +109,14 @@ class PokeEnv(Env):
             rand = random.randint(217,255)/255
             return int(dmg * rand)
         
+    # crit multiplier based on speed
     def crit_hit(self,speed):
         thres = min(255,math.floor(speed/2))
         if random.randint(0,255) < thres:
             return 2
         return 1
 
+    # type effectiveness multiplier
     def type_effect(self,type1,type2):
         chart = np.loadtxt('chart.csv',dtype=str,delimiter=',')
         i = np.where(chart == type1)[1][0]
