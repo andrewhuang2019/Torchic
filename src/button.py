@@ -15,6 +15,7 @@ class Button:
         self.text_surf = self.font.render(text, True, white)
         self.text_rect = self.text_surf.get_rect(center = self.rect.center)
     
+    #draws a button onto the screen
     def draw(self, screen):
         mouse_pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(mouse_pos):
@@ -23,12 +24,14 @@ class Button:
             pygame.draw.rect(screen, self.color, self.rect)
         screen.blit(self.text_surf, self.text_rect)
 
+    #checks to see if a button is clicked
     def is_clicked(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
                 return True
         return False
     
+    #updates the text on a button
     def update_text(self, new_text):
         self.text = new_text
         self.text_surf = self.font.render(new_text, True, white)
