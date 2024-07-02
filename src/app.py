@@ -27,11 +27,10 @@ class App:
         self.pokemon2 = self.pokedex.get_random_pokemon()
         self.pokemon2 = Pokemon(self.pokemon2['Name'], self.pokemon2['HP'], self.pokemon2['Attack'], self.pokemon2['Defense'], 
                                 self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 4)
-        
+            
         self.battle = Battle(self.pokemon1, self.pokemon2)
         self.menu = Menu()
         self.menu.make_current_screen()
-        
  
     def on_init(self):
         self.in_menu = True
@@ -39,16 +38,48 @@ class App:
         self._running = True
  
     def on_event(self, event):
+
         if event.type == pygame.QUIT:
             self._running = False
+
         if self.menu.fight_button_is_clicked(event):
+
+            self.pokemon1 = self.pokedex.get_random_pokemon()
+            self.pokemon1 = Pokemon(self.pokemon1['Name'], self.pokemon1['HP'], self.pokemon1['Attack'], self.pokemon1['Defense'], 
+                                self.pokemon1['Sp. Atk'], self.pokemon1['Sp. Def'], self.pokemon1['Speed'], 4)
+        
+            self.pokemon2 = self.pokedex.get_random_pokemon()
+            self.pokemon2 = Pokemon(self.pokemon2['Name'], self.pokemon2['HP'], self.pokemon2['Attack'], self.pokemon2['Defense'], 
+                                self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 4)
+            
+            self.battle = Battle(self.pokemon1, self.pokemon2)
             self.battle.make_current_screen()
             self.in_battle = True
             self.in_menu = False
-        if self.battle.back_button_is_clicked(event):
-            self.menu.make_current_screen()
-            self.in_battle = False
-            self.in_menu = True
+
+        if self.battle.button1_is_clicked(event):
+            if self.battle.button1_text() == "FIGHT":
+                self.battle.button1_set_text("ATTACK")
+            elif self.battle.button1_text() == "ATTACK":
+                self.battle.button1_set_text("FIGHT")
+
+        if self.battle.button2_is_clicked(event):
+            if self.battle.button2_text() == "PKMN":
+                self.battle.button2_set_text("POKE")
+            elif self.battle.button2_text() == "POKE":
+                self.battle.button2_set_text("PKMN")
+
+        if self.battle.button3_is_clicked(event):
+            if self.battle.button3_text() == "ITEM":
+                self.battle.button3_set_text("POTION")
+            elif self.battle.button3_text() == "POTION":
+                self.battle.button3_set_text("ITEM")
+
+        if self.battle.button4_is_clicked(event):
+            if self.battle.button4_text() == "RUN":
+                self.menu.make_current_screen()
+                self.in_battle = False
+                self.in_menu = True
 
     def on_loop(self):
         pass

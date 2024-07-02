@@ -20,8 +20,6 @@ class Battle:
         self.fight_box_border = pygame.Rect(10, 430, 780, 165)        
         self.fight_box = pygame.Rect(20, 440, 760, 145)
 
-        self.back_button = Button(12, 12, 50, 50, "B", blue, green)
-
         #Pokemon images
         self.scale_factor1 = 8
         self.scale_factor2 = 5
@@ -75,7 +73,6 @@ class Battle:
         self.button2.draw(self.battle_screen.screen)
         self.button3.draw(self.battle_screen.screen)
         self.button4.draw(self.battle_screen.screen)
-        self.back_button.draw(self.battle_screen.screen)
 
         pygame.display.flip()
 
@@ -83,17 +80,38 @@ class Battle:
     def button1_is_clicked(self, event):
         return self.button1.is_clicked(event)
     
+    def button1_text(self):
+        return self.button1.text
+    
+    def button1_set_text(self, new_text):
+        self.button1.update_text(new_text)
+
     def button2_is_clicked(self, event):
         return self.button2.is_clicked(event)
+    
+    def button2_text(self):
+        return self.button2.text
+    
+    def button2_set_text(self, new_text):
+        self.button2.update_text(new_text)
     
     def button3_is_clicked(self, event):
         return self.button3.is_clicked(event)
     
+    def button3_text(self):
+        return self.button3.text
+    
+    def button3_set_text(self, new_text):
+        self.button3.update_text(new_text)
+    
     def button4_is_clicked(self, event):
         return self.button4.is_clicked(event)
+
+    def button4_text(self):
+        return self.button4.text
     
-    def back_button_is_clicked(self, event):
-        return self.back_button.is_clicked(event)
+    def button4_set_text(self, new_text):
+        self.button4.update_text(new_text)
 
     def make_current_screen(self):
         self.battle_screen.make_current_screen()

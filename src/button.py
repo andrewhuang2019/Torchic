@@ -28,3 +28,8 @@ class Button:
             if self.rect.collidepoint(event.pos):
                 return True
         return False
+    
+    def update_text(self, new_text):
+        self.text = new_text
+        self.text_surf = self.font.render(new_text, True, white)
+        self.text_rect = self.text_surf.get_rect(center = self.rect.center)
