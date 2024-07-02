@@ -16,10 +16,11 @@ class PokemonManager:
         else:
             raise TypeError("Invalid Type")
     
+    #generates a random pokemon from Gen 1
     def get_random_pokemon(self):
         return self.pokedex.iloc[random.randint(1, 151)]
 
-
+#for testing 
 if __name__ == "__main__":
     pokemon_manager = PokemonManager()
     print(pokemon_manager.get_random_pokemon())

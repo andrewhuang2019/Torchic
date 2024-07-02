@@ -11,13 +11,16 @@ gray = (211, 211, 211)
 
 class Battle:
     def __init__(self, pokemon1, pokemon2):
+        #initialize screen for battle with caption 
         self.battle_screen = Screen("Battle")
 
+        #Creates 4 buttons on battle screen with initial text
         self.button1 = Button(340, 450, 200, 50, "FIGHT", blue, green)
         self.button2 = Button(565, 450, 200, 50, "PKMN", blue, green)
         self.button3 = Button(340, 525, 200, 50, "ITEM", blue, green)
         self.button4 = Button(565, 525, 200, 50, "RUN", blue, green)
 
+        #Creates fight box border
         self.fight_box_border = pygame.Rect(10, 430, 780, 165)        
         self.fight_box = pygame.Rect(20, 440, 760, 145)
 
@@ -50,10 +53,11 @@ class Battle:
         self.pokemon2_health = pygame.Rect(134, 64, 190, 8)
         self.pokemon2_health_background = pygame.Rect(130, 60, 198, 16)
 
+    #unused method; was meant to determine what a move does
+    #def use_move(self, move):
+    #    pass
 
-    def use_move(self, move):
-        pass
-
+    #Displays battle screen to the computer
     def display_screen(self):
         self.battle_screen.check_update((255,255,255))
         self.battle_screen.screen_update()
@@ -77,7 +81,11 @@ class Battle:
 
         pygame.display.flip()
 
+    #makes this screen into the current one
+    def make_current_screen(self):
+        self.battle_screen.make_current_screen()
 
+    #methods to check if button is clicked, check text, and set update text
     def button1_is_clicked(self, event):
         return self.button1.is_clicked(event)
     
@@ -113,8 +121,5 @@ class Battle:
     
     def button4_set_text(self, new_text):
         self.button4.update_text(new_text)
-
-    def make_current_screen(self):
-        self.battle_screen.make_current_screen()
 
 
