@@ -12,8 +12,8 @@ move2 = Move('Aqua Tail','Water',30,'Physical')
 move3 = Move('Barrage','Normal',15,'Physical')
 move4 = Move('Bolt Beak','Electric',25,'Physical')
 
-poke1 = Pokemon(39,'Charmander',52,60,43,50,[move1,move2,move3,move4],65,25,'Fire')
-poke2 = Pokemon(44,'Squirtle',48,50,65,64,[move1,move2,move3,move4],43,25,'Water')
+poke1 = Pokemon('Charmander',39,52,60,43,50,65,25,[move1,move2,move3,move4],'Fire')
+poke2 = Pokemon('Squirtle',44,48,50,65,64,43,25,[move1,move2,move3,move4],'Water')
 
 class PokeEnv(Env):
     def __init__(self):
