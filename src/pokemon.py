@@ -1,6 +1,6 @@
 class Pokemon:
 
-    def __init__(self, name, health, attack, defense, sp_attack, sp_defense, speed, moveset):
+    def __init__(self, health, name, attack, sp_attack, defense, sp_defense, moveset, speed, level, type1, type2=None):
         self.name = name
         self.health = health
         self.attack = attack
@@ -9,6 +9,10 @@ class Pokemon:
         self.sp_defense = sp_defense
         self.speed = speed
         self.moveset = moveset
+        self.speed = speed
+        self.level = level
+        self.type1 = type1
+        self.type2 = type2
 
     def get_name(self):
         return self.name
