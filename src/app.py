@@ -22,12 +22,14 @@ class App:
 
         self.pokemon1 = self.pokedex.get_random_pokemon()
         self.pokemon1 = Pokemon(self.pokemon1['Name'], self.pokemon1['HP'], self.pokemon1['Attack'], self.pokemon1['Defense'], 
-                                self.pokemon1['Sp. Atk'], self.pokemon1['Sp. Def'], self.pokemon1['Speed'], 25, 4, self.pokemon1['Type 1'], self.pokemon1['Type 2'])
+                                self.pokemon1['Sp. Atk'], self.pokemon1['Sp. Def'], self.pokemon1['Speed'], 25, 
+                                4, self.pokemon1['Type 1'], self.pokemon1['Type 2'])
         
         self.pokemon2 = self.pokedex.get_random_pokemon()
         self.pokemon2 = Pokemon(self.pokemon2['Name'], self.pokemon2['HP'], self.pokemon2['Attack'], self.pokemon2['Defense'], 
-                                self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 25, 4, self.pokemon2['Type 1'], self.pokemon2['Type 2'])
-            
+                                self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 25, 
+                                4, self.pokemon2['Type 1'], self.pokemon2['Type 2'])
+
         self.battle = Battle(self.pokemon1, self.pokemon2)
         self.menu = Menu()
         self.menu.make_current_screen()
@@ -46,11 +48,13 @@ class App:
 
             self.pokemon1 = self.pokedex.get_random_pokemon()
             self.pokemon1 = Pokemon(self.pokemon1['Name'], self.pokemon1['HP'], self.pokemon1['Attack'], self.pokemon1['Defense'], 
-                                self.pokemon1['Sp. Atk'], self.pokemon1['Sp. Def'], self.pokemon1['Speed'], 4)
+                                    self.pokemon1['Sp. Atk'], self.pokemon1['Sp. Def'], self.pokemon1['Speed'], 25, 
+                                    4, self.pokemon1['Type 1'], self.pokemon1['Type 2'])
         
             self.pokemon2 = self.pokedex.get_random_pokemon()
             self.pokemon2 = Pokemon(self.pokemon2['Name'], self.pokemon2['HP'], self.pokemon2['Attack'], self.pokemon2['Defense'], 
-                                self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 4)
+                                    self.pokemon2['Sp. Atk'], self.pokemon2['Sp. Def'], self.pokemon2['Speed'], 25, 
+                                    4, self.pokemon2['Type 1'], self.pokemon2['Type 2'])
             
             self.battle = Battle(self.pokemon1, self.pokemon2)
             self.battle.make_current_screen()
